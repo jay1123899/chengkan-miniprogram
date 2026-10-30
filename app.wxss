@@ -1,0 +1,517 @@
+/* ============================================================
+   配色方案：低饱和青灰 + 米白
+   ------------------------------------------------------------
+   米白底      #f5f3ee      卡片面      #fffdf9
+   青灰·深     #46605f      主色（标题 / 主按钮 / 选中态 / 导航栏）
+   青灰·中     #6b8a88      次要强调
+   青灰·浅     #a3bab8      装饰、占位
+   极浅青灰    #eef2f1      标签底
+   分隔线      #e6e2d9
+   正文        #2f3a3a      次要文字    #646f6d
+   提示底      #faf5e8      提示色      #c9b183 / #7a6a45
+   阴影        rgba(70, 96, 95, α)
+   ============================================================ */
+
+page {
+  background: #f5f3ee;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #2f3a3a;
+  font-size: 28rpx;
+}
+
+.wrap {
+  padding: 24rpx;
+}
+
+/* ============================================================
+   高斯模糊（filter: blur）使用说明
+   blur 由 GPU 渲染，面积越大越吃性能，低端安卓机容易掉帧。
+   所以这里只用在「面积可控的装饰元素」上：
+     · 无图占位块里的柔光色斑（两个圆形，各约 300rpx）
+     · 轮播标题的毛玻璃胶囊（backdrop-filter，面积仅包住文字）
+   列表缩略图这类小元素改用 radial-gradient 做柔光，零渲染开销。
+   ============================================================ */
+
+/* ============ 首页轮播 ============ */
+.banner-swiper {
+  width: 100%;
+  height: 400rpx;
+}
+
+.banner-item {
+  position: relative;
+  width: 100%;
+  height: 400rpx;
+  /* 网络图片加载过程中的底色，避免出现白色闪屏 */
+  background: #e4e0d6;
+}
+
+.banner-img {
+  width: 100%;
+  height: 400rpx;
+  display: block;
+}
+
+/* 无图时的占位块：青灰渐变底 + 两个模糊色斑，形成柔和色雾 */
+.banner-ph {
+  position: relative;
+  overflow: hidden;
+}
+
+.ph-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(38px);
+}
+
+.ph-blob-1 {
+  width: 320rpx;
+  height: 320rpx;
+  left: -70rpx;
+  top: -80rpx;
+  background: rgba(255, 253, 249, 0.38);
+}
+
+.ph-blob-2 {
+  width: 280rpx;
+  height: 280rpx;
+  right: -60rpx;
+  bottom: -90rpx;
+  background: rgba(163, 186, 184, 0.45);
+}
+
+.banner-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 40rpx 28rpx 28rpx;
+  background: linear-gradient(to top, rgba(47, 58, 58, 0.40), rgba(47, 58, 58, 0));
+  color: #ffffff;
+}
+
+/* 毛玻璃文字胶囊：不支持 backdrop-filter 时退化为半透明深底，文字依然清晰 */
+.banner-tag {
+  display: inline-block;
+  padding: 16rpx 28rpx;
+  border-radius: 22rpx;
+  background: rgba(47, 58, 58, 0.32);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.banner-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.banner-sub {
+  font-size: 24rpx;
+  opacity: 0.92;
+  margin-top: 8rpx;
+}
+
+/* ============ 搜索框 ============ */
+.search {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 253, 249, 0.66);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1rpx solid rgba(255, 255, 255, 0.7);
+  border-radius: 40rpx;
+  padding: 16rpx 28rpx;
+  box-shadow: 0 4rpx 14rpx rgba(70, 96, 95, 0.07), 0 1rpx 3rpx rgba(70, 96, 95, 0.04);
+}
+
+/* 搜索区吸顶：滚动时固定在顶部，下方滚过的卡片透过毛玻璃，效果才看得见 */
+.search-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0 -24rpx;
+  padding: 20rpx 24rpx 10rpx;
+  background: rgba(245, 243, 238, 0.72);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+}
+
+.search input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #2f3a3a;
+}
+
+.search-btn {
+  color: #46605f;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding-left: 20rpx;
+}
+
+/* ============ 分类 ============ */
+.cats {
+  white-space: nowrap;
+  margin: 24rpx 0 8rpx;
+}
+
+.cat {
+  display: inline-block;
+  padding: 10rpx 30rpx;
+  margin-right: 16rpx;
+  border-radius: 30rpx;
+  background: #fffdf9;
+  color: #646f6d;
+  font-size: 26rpx;
+  box-shadow: 0 2rpx 8rpx rgba(70, 96, 95, 0.05);
+}
+
+.cat.active {
+  background: #46605f;
+  color: #fffdf9;
+  font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(70, 96, 95, 0.22);
+}
+
+/* ============ 卡片列表 ============ */
+.card {
+  display: flex;
+  background: #fffdf9;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-top: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(70, 96, 95, 0.08), 0 2rpx 6rpx rgba(70, 96, 95, 0.04);
+}
+
+/* 缩略图占位：径向柔光叠加青灰渐变，不用 blur，零性能开销 */
+.thumb {
+  width: 220rpx;
+  height: 200rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 48rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+  background-image: radial-gradient(circle at 28% 18%, rgba(255, 253, 249, 0.40), rgba(255, 253, 249, 0) 62%),
+                    radial-gradient(circle at 82% 88%, rgba(163, 186, 184, 0.42), rgba(163, 186, 184, 0) 60%),
+                    linear-gradient(135deg, #46605f, #7a9598);
+}
+
+.thumb image {
+  width: 100%;
+  height: 100%;
+}
+
+.card-body {
+  flex: 1;
+  padding: 20rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.card-summary {
+  font-size: 24rpx;
+  color: #646f6d;
+  line-height: 1.6;
+  margin-top: 8rpx;
+}
+
+.tags {
+  margin-top: 10rpx;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 22rpx;
+  color: #46605f;
+  background: #eef2f1;
+  border-radius: 8rpx;
+  padding: 4rpx 14rpx;
+  margin-right: 10rpx;
+}
+
+.star {
+  margin-left: 12rpx;
+  font-size: 26rpx;
+  color: #c9b183;
+}
+
+/* ============ 详情页 ============ */
+/* 图片区做成竖图友好：原图按 aspectFit 完整显示（不裁切），
+   两侧或上下的留白由同一张图模糊放大后铺底填充，观感接近主流 App。 */
+.hero {
+  width: 100%;
+  height: 800rpx;
+  position: relative;
+  overflow: hidden;
+  background: #2f3a3a;
+}
+
+/* 模糊底：同一张图放大 + 高斯模糊，填满留白
+   blur 越大越像"氛围色块"；scale 要跟着放大，否则模糊会虚化到边缘露出底下深色 */
+.hero-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 800rpx;
+  filter: blur(44px) saturate(1.15);
+  transform: scale(1.35);
+  opacity: 0.75;
+}
+
+/* 前景：完整显示原图 */
+.hero-img-fit {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 800rpx;
+  display: block;
+}
+
+.hero-swiper {
+  width: 100%;
+  height: 800rpx;
+}
+
+/* 无图占位：青灰渐变底 + 模糊色斑 + 首字 */
+.hero-ph {
+  position: relative;
+  width: 100%;
+  height: 800rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(150deg, #46605f, #7a9598);
+}
+
+.ph-char {
+  position: relative;
+  z-index: 2;
+  font-size: 140rpx;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 12rpx;
+}
+
+/* 图片底部柔和融入下方米白内容区 */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90rpx;
+  z-index: 3;
+  background: linear-gradient(to bottom, rgba(255, 253, 249, 0), rgba(255, 253, 249, 0.94));
+  pointer-events: none;
+}
+
+.hero-count {
+  position: absolute;
+  right: 24rpx;
+  bottom: 32rpx;
+  z-index: 4;
+  background: rgba(47, 58, 58, 0.44);
+  color: #ffffff;
+  font-size: 22rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 24rpx;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* 标题栏吸顶 + 毛玻璃：向下滚动时图片从它背后滑过，玻璃质感才显现 */
+.title-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 253, 249, 0.86);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 28rpx 24rpx 24rpx;
+  border-bottom: 1rpx solid rgba(230, 226, 217, 0.75);
+}
+
+.title-name {
+  font-size: 42rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.title-meta {
+  font-size: 24rpx;
+  color: #646f6d;
+  margin-top: 10rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #46605f;
+  margin: 34rpx 0 14rpx;
+  padding-left: 18rpx;
+  border-left: 8rpx solid #6b8a88;
+}
+
+.section-title:first-child {
+  margin-top: 10rpx;
+}
+
+.para {
+  font-size: 28rpx;
+  line-height: 1.85;
+  color: #3a4747;
+  margin-bottom: 18rpx;
+  text-align: justify;
+}
+
+.para:last-child {
+  margin-bottom: 0;
+}
+
+.bullet-line {
+  display: flex;
+  font-size: 27rpx;
+  line-height: 1.8;
+  color: #3a4747;
+  margin-bottom: 12rpx;
+}
+
+.bullet-dot {
+  color: #6b8a88;
+  font-weight: 700;
+  margin-right: 12rpx;
+}
+
+.notice-box {
+  background: #faf5e8;
+  border-left: 8rpx solid #c9b183;
+  border-radius: 12rpx;
+  padding: 22rpx 24rpx;
+  box-shadow: 0 4rpx 14rpx rgba(201, 177, 131, 0.10);
+}
+
+.notice-item {
+  font-size: 26rpx;
+  line-height: 1.8;
+  color: #7a6a45;
+  margin-bottom: 8rpx;
+}
+
+.info-line {
+  font-size: 26rpx;
+  color: #5a6664;
+  line-height: 1.9;
+}
+
+/* ============ 按钮 ============ */
+.btn {
+  margin-top: 40rpx;
+  background: #46605f;
+  color: #fffdf9;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 24rpx 0;
+  text-align: center;
+  line-height: 1.5;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(70, 96, 95, 0.22);
+}
+
+button.btn::after {
+  border: none;
+}
+
+.btn.ghost {
+  background: #fffdf9;
+  color: #46605f;
+  border: 2rpx solid #6b8a88;
+  box-shadow: none;
+}
+
+.btn-row {
+  display: flex;
+  gap: 24rpx;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ============ 空状态 / 区块 ============ */
+.empty {
+  text-align: center;
+  color: #9aa5a3;
+  font-size: 28rpx;
+  padding: 140rpx 40rpx;
+  line-height: 2;
+}
+
+.block {
+  background: #fffdf9;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-top: 24rpx;
+  line-height: 1.85;
+  font-size: 27rpx;
+  color: #3a4747;
+  box-shadow: 0 8rpx 24rpx rgba(70, 96, 95, 0.07), 0 2rpx 6rpx rgba(70, 96, 95, 0.03);
+}
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20rpx;
+  padding: 46rpx 36rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #46605f, #7a9598);
+}
+
+/* 关于页顶部卡片的柔光色斑 */
+.banner .ph-blob-1 {
+  left: -60rpx;
+  top: -100rpx;
+}
+
+.banner .ph-blob-2 {
+  right: -50rpx;
+  bottom: -110rpx;
+}
+
+.banner-title-lg {
+  position: relative;
+  z-index: 2;
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+}
+
+.banner-sub-lg {
+  position: relative;
+  z-index: 2;
+  font-size: 24rpx;
+  opacity: 0.9;
+  margin-top: 12rpx;
+  line-height: 1.7;
+}
+
+/* 自定义 tabBar 是浮动元素，页面可视区不再自动避开它，需要自己留出底部空间
+   （100rpx 栏高 + 安全区 + 余量） */
+.wrap-tabbar {
+  padding-bottom: 200rpx;
+}

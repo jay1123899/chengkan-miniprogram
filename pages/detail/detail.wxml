@@ -1,0 +1,95 @@
+<!-- 景点详情页：图片 + 看点 + 介绍 + 游览提示 + 位置信息（无评论区、无点赞） -->
+<view wx:if="{{spot}}">
+
+  <!-- 图片区：竖图友好 —— 模糊放大的同图铺底，原图完整显示不裁切 -->
+  <view class="hero">
+    <swiper
+      wx:if="{{gallery.length > 1}}"
+      class="hero-swiper"
+      indicator-dots="{{true}}"
+      indicator-color="rgba(255,255,255,0.45)"
+      indicator-active-color="#ffffff"
+      circular="{{true}}"
+    >
+      <swiper-item wx:for="{{gallery}}" wx:key="*this">
+        <image class="hero-bg" src="{{item}}" mode="aspectFill"></image>
+        <image
+          class="hero-img-fit"
+          src="{{item}}"
+          mode="aspectFit"
+          data-src="{{item}}"
+          data-idx="{{index}}"
+          bindtap="onPreview"
+          binderror="onHeroImgError"
+        ></image>
+      </swiper-item>
+    </swiper>
+
+    <block wx:elif="{{gallery.length === 1}}">
+      <image class="hero-bg" src="{{gallery[0]}}" mode="aspectFill"></image>
+      <image
+        class="hero-img-fit"
+        src="{{gallery[0]}}"
+        mode="aspectFit"
+        data-src="{{gallery[0]}}"
+        data-idx="0"
+        bindtap="onPreview"
+        binderror="onHeroImgError"
+      ></image>
+    </block>
+
+    <view wx:else class="hero-ph">
+      <view class="ph-blob ph-blob-1"></view>
+      <view class="ph-blob ph-blob-2"></view>
+      <view class="ph-char">{{spot.first}}</view>
+    </view>
+
+    <view class="hero-count" wx:if="{{gallery.length > 1}}">{{gallery.length}} 张</view>
+  </view>
+
+  <!-- 标题 -->
+  <view class="title-bar">
+    <view class="title-name">{{spot.name}}</view>
+    <view class="title-meta">{{spot.category}} · {{spot.summary}}</view>
+  </view>
+
+  <view class="wrap">
+
+    <!-- 看点 -->
+    <block wx:if="{{spot.highlights.length}}">
+      <view class="section-title">看点</view>
+      <view class="bullet-line" wx:for="{{spot.highlights}}" wx:key="*this">
+        <text class="bullet-dot">·</text>
+        <text>{{item}}</text>
+      </view>
+    </block>
+
+    <!-- 景点介绍 -->
+    <view class="section-title">景点介绍</view>
+    <view class="para" wx:for="{{spot.desc}}" wx:key="*this">{{item}}</view>
+
+    <!-- 游览提示 -->
+    <block wx:if="{{spot.notice.length}}">
+      <view class="section-title">游览提示</view>
+      <view class="notice-box">
+        <view class="notice-item" wx:for="{{spot.notice}}" wx:key="*this">· {{item}}</view>
+      </view>
+    </block>
+
+    <!-- 位置信息（长按文字可直接选中复制，不需要任何授权） -->
+    <view class="section-title">位置信息</view>
+    <text class="info-line" user-select="{{true}}">{{spot.address}}</text>
+
+    <!-- 操作 -->
+    <view class="btn" style="margin-top: 40rpx;" bindtap="onToggleFav">{{fav ? '已收藏 ★' : '收藏 ☆'}}</view>
+
+    <button class="btn ghost" open-type="share">分享给朋友</button>
+
+  </view>
+
+</view>
+
+<view class="empty" wx:else>
+  <view>景点信息不存在</view>
+  <view>请返回上一页重新选择</view>
+</view>

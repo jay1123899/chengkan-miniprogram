@@ -1,0 +1,31 @@
+<view class="wrap wrap-tabbar">
+
+  <view class="banner">
+    <view class="ph-blob ph-blob-1"></view>
+    <view class="ph-blob ph-blob-2"></view>
+    <view class="banner-title-lg">关于呈坎</view>
+    <view class="banner-sub-lg">徽州古村落 · 水圳穿村</view>
+  </view>
+
+  <view class="block">
+    <view class="para" wx:for="{{intro}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="section-title">使用说明</view>
+  <view class="block" style="margin-top: 0;">
+    <view class="bullet-line" wx:for="{{guide}}" wx:key="*this">
+      <text class="bullet-dot">·</text>
+      <text>{{item}}</text>
+    </view>
+  </view>
+
+  <view class="section-title">内容与图片说明</view>
+  <view class="block" style="margin-top: 0;">
+    <view class="info-line" wx:for="{{info}}" wx:key="label" style="margin-bottom: 20rpx;">
+      <text style="color: #46605f; font-weight: 600;">{{item.label}}：</text>{{item.value}}
+    </view>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+
+</view>

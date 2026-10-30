@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/spots/spots",
+    "pages/detail/detail",
+    "pages/favorite/favorite",
+    "pages/about/about"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#46605f",
+    "navigationBarTitleText": "呈坎古村",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f3ee"
+  },
+  "tabBar": {
+    "color": "#9aa5a3",
+    "selectedColor": "#46605f",
+    "backgroundColor": "#fffdf9",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/spots/spots",
+        "text": "景点",
+        "iconPath": "images/tab-spot.png",
+        "selectedIconPath": "images/tab-spot-active.png"
+      },
+      {
+        "pagePath": "pages/favorite/favorite",
+        "text": "收藏",
+        "iconPath": "images/tab-fav.png",
+        "selectedIconPath": "images/tab-fav-active.png"
+      },
+      {
+        "pagePath": "pages/about/about",
+        "text": "关于",
+        "iconPath": "images/tab-about.png",
+        "selectedIconPath": "images/tab-about-active.png"
+      }
+    ],
+    "custom": true
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

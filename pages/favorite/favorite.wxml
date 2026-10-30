@@ -1,0 +1,40 @@
+<view class="wrap wrap-tabbar">
+
+  <view class="section-title" style="margin-top: 10rpx;">我的收藏（{{list.length}}）</view>
+
+  <view
+    class="card"
+    wx:for="{{list}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="goDetail"
+  >
+    <view class="thumb">
+      <image
+        wx:if="{{item.image}}"
+        src="{{item.image}}"
+        mode="aspectFill"
+        binderror="onThumbImgError"
+        data-idx="{{index}}"
+      ></image>
+      <block wx:else>{{item.first}}</block>
+    </view>
+    <view class="card-body">
+      <view>
+        <view class="card-title">{{item.name}}</view>
+        <view class="card-summary">{{item.summary}}</view>
+      </view>
+      <view class="tags">
+        <text class="tag" catchtap="onRemove" data-id="{{item.id}}">取消收藏</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{list.length === 0}}">
+    <view>还没有收藏的景点</view>
+    <view>去景点页逛一逛吧</view>
+  </view>
+
+  <view class="btn ghost" wx:if="{{list.length === 0}}" bindtap="goSpots">去看景点</view>
+
+</view>
