@@ -12,9 +12,4 @@ project.private.config.json
 Thumbs.db
 *.log
 
-# 照片原图（已托管到 CDN，数据文件里用的是 https 链接，不需要进仓库）
-# 本地仍保留一份备份，随时能重新上传
-images/*.jpg
-images/*.jpeg
-images/*.png
-!images/tab-*.png
+# 图片全部本地化，随仓库一起提交（克隆后可直接运行，无需外部图床）
