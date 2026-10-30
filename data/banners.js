@@ -16,7 +16,7 @@ const banners = [
     spotId: 'yongxinghu',
     title: '呈坎古村',
     subtitle: '徽州古村落 · 水圳穿村',
-    image: 'https://i.ibb.co/sdYd3PjX/banner-1.jpg',
+    image: '/images/banner-1.jpg',
     bg: 'linear-gradient(135deg, #46605f, #7a9598)'
   },
   {
@@ -24,7 +24,7 @@ const banners = [
     spotId: 'baolunge',
     title: '宝纶阁',
     subtitle: '梁架彩绘 · 木雕细部',
-    image: 'https://i.ibb.co/rR34Nzmk/banner-2.jpg',
+    image: '/images/banner-2.jpg',
     bg: 'linear-gradient(135deg, #4f6b69, #85a3a0)'
   },
   {
@@ -32,7 +32,7 @@ const banners = [
     spotId: 'yudeng',
     title: '鱼灯',
     subtitle: '徽州年节民俗',
-    image: 'https://i.ibb.co/tPFgHyZt/banner-3.jpg',
+    image: '/images/banner-3.jpg',
     bg: 'linear-gradient(135deg, #557371, #8fadaa)'
   },
   {
@@ -40,7 +40,7 @@ const banners = [
     spotId: 'changchunshe',
     title: '长春社',
     subtitle: '村中的社屋建筑',
-    image: 'https://i.ibb.co/ksmNSQqr/banner-4.jpg',
+    image: '/images/banner-4.jpg',
     bg: 'linear-gradient(135deg, #405a58, #6f8f8c)'
   },
   {
@@ -48,7 +48,7 @@ const banners = [
     spotId: 'gucunluo',
     title: '古村落',
     subtitle: '街巷与马头墙',
-    image: 'https://i.ibb.co/FkZs3sPs/banner-5.jpg',
+    image: '/images/banner-5.jpg',
     bg: 'linear-gradient(135deg, #38514f, #668684)'
   }
 ]
